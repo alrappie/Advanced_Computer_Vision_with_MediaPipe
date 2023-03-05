@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 
-class pose_detector():
+class Pose_Detector():
     
     def __init__(self,STATIC_IMAGE_MODE=False,MODEL_COMPLEXITY=1,SMOOTH_LANDMARKS=True,ENABLE_SEGMENTATION=False,SMOOTH_SEGMENTATION=True,MIN_DETECTION_CONFIDENCE=0.5,MIN_TRACKING_CONFIDENCE=0.5):
         self.static_image_mode = STATIC_IMAGE_MODE
@@ -44,7 +44,7 @@ def main():
     cap = cv2.VideoCapture(r"\C:\Users\alrav\Videos\vid2.mp4")
     pTime = 0
     cTime = 0
-    detector = pose_detector()
+    detector = Pose_Detector()
     while True:
         success,img = cap.read()
         img = detector.find_pose(img)
