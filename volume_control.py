@@ -35,37 +35,84 @@ while True:
     lmList = detector.find_position(img,draw=False)
     if len(lmList) != 0:
         # print(lmList[4],lmList[8])
+        
+        ## make jempol
+        
+        # x2,y2 = lmList[4][1],lmList[4][2]
+        # x1,y1 = lmList[8][1],lmList[8][2]
+        # cx,cy = (x1+x2)//2, (y1+y2)//2
+        
+        # cv2.circle(img,(x1,y1),15,(255,0,255),cv2.FILLED)
+        # cv2.circle(img,(x2,y2),15,(255,0,255),cv2.FILLED)
+        
+        # cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
+        # cv2.circle(img,(cx,cy),15,(255,0,255),cv2.FILLED)
+        
+        # print(lmList[8],lmList[12])
 
-        x2,y2 = lmList[4][1],lmList[4][2]
+        
+        # length = math.hypot(x2-x1,y2-y1)
+        # print(length)
+        
+        ## hand range 50 - 300
+        ## volRange -65 - 0
+        # vol = np.interp(length,[50,300],[minVol,maxVol])
+        # volbar = np.interp(length,[50,300],[400,150])
+        # print(vol)
+        # volume.SetMasterVolumeLevel(vol,None)
+        
+        ## cara make atas bawah
+        
+        volumSekarang = float(volume.GetMasterVolumeLevel())
+        
         x1,y1 = lmList[8][1],lmList[8][2]
-        cx,cy = (x1+x2)//2, (y1+y2)//2
+        x2,y2 = lmList[12][1],lmList[12][2]
+        y3 = lmList[5][2]
+        y4 = lmList[9][2]
+        # print(y1,y2)
+        # print("Volume : ",volume.GetMasterVolumeLevel())
+        valRange1, valRange2 = y3-y1, y4-y2
+        # print('genggam',y3-y1)
+        # print('genggam',y4-y2)
+        if ((valRange1>100)&(valRange2>100)):
+            # if ((y1>y3)&(y2>y4)):
+            # print('gedein')
+            min = float(volumSekarang)+1.0
+            if (min <= 0):
+                print(min)
+                volume.SetMasterVolumeLevel(min,None)
+            else:
+                volume.SetMasterVolumeLevel(0,None)
+
+        
+        if ((valRange1<-100)&(valRange2<-100)):
+            # print('ngecilin')
+            min = float(volumSekarang)-1.0
+            if (min > -96.0):
+                print(min)
+                volume.SetMasterVolumeLevel(min,None)
+            else:
+                volume.SetMasterVolumeLevel(-96,None)
+            
+            
+        # vol = np.interp(length,[50,300],[minVol,maxVol])
+        # cx,cy = (x1+x2)//2, (y1+y2)//2
         
         cv2.circle(img,(x1,y1),15,(255,0,255),cv2.FILLED)
         cv2.circle(img,(x2,y2),15,(255,0,255),cv2.FILLED)
         
-        cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
-        cv2.circle(img,(cx,cy),15,(255,0,255),cv2.FILLED)
+        # cv2.line(img,(x1,y1),(x2,y2),(255,0,255),3)
+        # cv2.circle(img,(cx,cy),15,(255,0,255),cv2.FILLED)
+        # if length<50:
+            # cv2.circle(img,(cx,cy),15,(0,255,0),cv2.FILLED)
         
-        # print(lmList[8],lmList[12])
-        
-        # x1,y1 = lmList[8][1],lmList[8][2]
-        # x2,y2 = lmList[12][1],lmList[12][2]
-        
-        length = math.hypot(x2-x1,y2-y1)
-        # print(length)
-        
-        # hand range 50 - 300
-        # volRange -65 - 0
-        vol = np.interp(length,[50,300],[minVol,maxVol])
-        volbar = np.interp(length,[50,300],[400,150])
-        print(vol)
-        volume.SetMasterVolumeLevel(vol,None)
-        
-        if length<50:
-            cv2.circle(img,(cx,cy),15,(0,255,0),cv2.FILLED)
-        
-    cv2.rectangle(img,(50,150),(85,400),(0,255,0),3)
+        print("Volum Skrg : ",volumSekarang)
+        volbar = np.interp(volumSekarang,[-96,0],[400,150])
+        print("VOLBAR : ",volbar)
+    
+    
     cv2.rectangle(img,(50,int(volbar)),(85,400),(0,255,0),cv2.FILLED)
+    cv2.rectangle(img,(50,150),(85,400),(0,255,0),3)
         
     cTime = time.time()
     fps = 1/(cTime-pTime)
