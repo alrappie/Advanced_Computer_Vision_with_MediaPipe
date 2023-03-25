@@ -20,7 +20,8 @@ maxVol = volRange[1]
 vol = 0
 volbar = 0
 wCam, hCam = 1280,720
-
+print(minVol)
+print(maxVol)
 cap = cv2.VideoCapture(0)
 cap.set(3,wCam)
 cap.set(4,hCam)
@@ -77,22 +78,22 @@ while True:
         if ((valRange1>100)&(valRange2>100)):
             # if ((y1>y3)&(y2>y4)):
             # print('gedein')
-            min = float(volumSekarang)+1.0
+            min = float(volumSekarang)+1
             if (min <= 0):
                 print(min)
                 volume.SetMasterVolumeLevel(min,None)
             else:
-                volume.SetMasterVolumeLevel(0,None)
+                volume.SetMasterVolumeLevel(maxVol,None)
 
         
         if ((valRange1<-100)&(valRange2<-100)):
             # print('ngecilin')
-            min = float(volumSekarang)-1.0
+            min = float(volumSekarang)-1
             if (min > -96.0):
                 print(min)
                 volume.SetMasterVolumeLevel(min,None)
             else:
-                volume.SetMasterVolumeLevel(-96,None)
+                volume.SetMasterVolumeLevel(minVol,None)
             
             
         # vol = np.interp(length,[50,300],[minVol,maxVol])
@@ -105,9 +106,10 @@ while True:
         # cv2.circle(img,(cx,cy),15,(255,0,255),cv2.FILLED)
         # if length<50:
             # cv2.circle(img,(cx,cy),15,(0,255,0),cv2.FILLED)
-        
+            
+        volumSekarang = float(volume.GetMasterVolumeLevel())
         print("Volum Skrg : ",volumSekarang)
-        volbar = np.interp(volumSekarang,[-96,0],[400,150])
+        volbar = np.interp(volumSekarang,[minVol,maxVol],[400,150])
         print("VOLBAR : ",volbar)
     
     
