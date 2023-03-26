@@ -44,9 +44,11 @@ while True:
                     fingers.append(1)
             elif lmList[id][2] < lmList[id-2][2]:
                 # print('finger open')  
-                fingers.append(1)
+                fingers.append(1)   
             else:
                 fingers.append(0)
+                
+                
         # print(fingers)
         totalFingers = fingers.count(1)
         print(totalFingers)
