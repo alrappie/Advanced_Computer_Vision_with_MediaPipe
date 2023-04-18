@@ -58,11 +58,16 @@ while True:
             
             # print()
             # print(x_max-x_min)
-            if ((x_min>0)&y_min>0):
+            if ((y_min>20) & (x_min>20)):
                 imgCrop = img[y_min-20:y_max+20,x_min-20:x_max+20]
-                print(imgCrop.shape)
-                print(f'xmin: {x_min}, xmax: {x_max}, ymin: {y_min}, ymax: {y_max}, width: {x_max+x_min}, heigth: {y_max+y_min}')
                 cv2.imshow('Image2',imgCrop)
+                
+            print(y_min,x_min)
+            # imgCropShape = imgCrop.shape
+            # img[0:imgCropShape[0],0:imgCropShape[1]] = imgCrop
+            # print(imgCrop.shape)
+            # print(f'xmin: {x_min}, xmax: {x_max}, ymin: {y_min}, ymax: {y_max}, width: {x_max+x_min}, heigth: {y_max+y_min}')
+            
         
     cv2.imshow("Image",img)
     cv2.waitKey(1)
